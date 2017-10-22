@@ -83,12 +83,7 @@ j_initialNewVAO(GLuint *newVAO, GLuint *newVertexBuffer, GLuint *newIndiceBuffer
 int
 j_getStrokeVertices(autoVR::Operation *data, std::vector<float> &verticeData, bool *attributes)
 {
-	int typeIndex = data->type();
 	int pointSize = data->points_size();
-
-	float r = data->color().red() * data->color().lightness();
-	float g = data->color().green() * data->color().lightness();
-	float b = data->color().blue() * data->color().lightness();
 
 	int count = 0;
 

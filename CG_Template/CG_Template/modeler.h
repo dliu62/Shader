@@ -19,7 +19,7 @@ protected:
 	std::vector<unsigned int>  m_elementIndiceCounts;
 
 public:
-	BufferRender(const std::string &filename);
+	BufferRender(const std::string &filename); //pass the hair filename 
 	~BufferRender() { deletGL(); }
 
 	void  deletGL() {
