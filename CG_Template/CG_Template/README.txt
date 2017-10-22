@@ -1,0 +1,11 @@
+我的program目前用Shader.cgfx（cg代码）去渲染一个cube.
+我的目标是改变Shader.cgfx的代码，把Unity shader的代码替换进去。我希望能用Unity shader来渲染这个cube
+
+打开Shader.cgfx，把它和unity shader里的subshader作对比，会发现结构完全是一样的
+需要做的事：
+
+请看Shader.cgfx里的Appdata.这是需要pass进vertex shader的数据。
+与之相对的，unity shader里的a2v是需要pass进unity shader的数据。我目前的程序没有用到normal,tangent和texcoord0, 所以我想用现成的这三组data来做实验
+
+当我有了data之后我可以去发现在vert和frag里有哪些东西是不能照搬的（大多数都可以，因为是普通的cg code）。
+有一些肯定不行，比如UnityWorldSpaceLightDir之类的。但是这种很明显是vector或者matrix,那么我需要把它从opengl里传进来，然后在shader里改成新的。

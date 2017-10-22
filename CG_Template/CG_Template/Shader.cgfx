@@ -1,0 +1,46 @@
+//These two structs are VARYING data
+
+struct AppData
+{
+    in float3 Position : POSITION; // in Model Space
+    in float3 Color : COLOR;
+};
+
+struct v2f
+{
+    float4 Position : POSITION; // in Clip Space
+    float4 Color : COLOR;
+};
+
+//UNIFORM data
+float4x4 ModelViewProjection;
+
+//Vertex Program
+v2f mainVP( AppData IN, 
+            uniform float4x4 modelViewProjection )
+{
+    v2f OUT;
+    
+    OUT.Position = mul( modelViewProjection, float4(IN.Position,1));
+	OUT.Color = float4(IN.Color, 1.0);
+
+    return OUT;
+}
+
+//Fragment Program
+float4 mainFP( v2f IN ) : COLOR //only color is used because position is taken care of by vertex program.
+{
+    return IN.Color;
+}
+
+
+
+technique t0
+{
+    pass p0
+    {
+        VertexProgram = compile glslv mainVP( ModelViewProjection );
+        FragmentProgram = compile glslf mainFP();
+    }
+}
+

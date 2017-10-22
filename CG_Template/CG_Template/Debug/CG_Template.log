@@ -1,0 +1,6 @@
+﻿  main.cpp
+d:\visualstudiows\cg template\cg_template\externals\glm-0.9.9-a1\glm\core\func_common.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+d:\visualstudiows\cg template\cg_template\externals\glm-0.9.9-a1\glm\core\func_common.inl : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+d:\visualstudiows\cg template\cg_template\externals\glm-0.9.9-a1\glm\core\func_integer.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  CG_Template.vcxproj -> D:\VisualStudioWS\CG Template\CG_Template\Debug\CG_Template.exe
+  CG_Template.vcxproj -> D:\VisualStudioWS\CG Template\CG_Template\Debug\CG_Template.pdb (Partial PDB)

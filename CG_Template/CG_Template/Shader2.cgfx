@@ -1,0 +1,89 @@
+//These two structs are VARYING data
+
+struct AppData
+{
+    in float4 vertex : POSITION; // in Model Space
+	in float3 normal : NORMAL;
+	in float4 tangent : TANGENT;
+	in float4 texcoord : TEXCOORD0;
+	
+	
+	
+	
+    in float3 Color : COLOR;
+	
+};
+
+struct v2f
+{
+    float4 Position : POSITION; // in Clip Space
+    float4 Color : COLOR;
+};
+
+
+struct a2v 
+			{
+				float4 vertex : POSITION;
+				float3 normal : NORMAL;
+				float4 tangent : TANGENT;
+				float4 texcoord : TEXCOORD0;
+			};
+
+            struct v2f2
+            {
+                float2 uv : TEXCOORD0;
+                //SHADOW_COORDS(1) // put shadows data into TEXCOORD1
+                fixed3 diff : COLOR0; // diffuse lighting color
+                fixed3 ambient : COLOR1;
+                float4 pos : SV_POSITION;
+
+                // ImanHairShader
+				half3 worldNormal : NORMAL;
+				half3 objectNormal : NORMAL1;
+  				float3 worldPos : TEXCOORD2;
+                float3 worldTangent : TANGENT;
+
+				half3 tspace0 : TEXCOORD3;
+                half3 tspace1 : TEXCOORD4;
+                half3 tspace2 : TEXCOORD5;
+            };
+
+//UNIFORM data
+float4x4 ModelViewProjection;
+
+
+
+
+
+//Vertex Program
+v2f mainVP( AppData IN, 
+            uniform float4x4 modelViewProjection )
+{
+    v2f OUT;
+    
+    OUT.Position = mul( modelViewProjection, IN.vertex);
+	OUT.Color = float4(IN.Color, 1.0);
+
+    return OUT;
+}
+
+
+
+
+//Fragment Program
+float4 mainFP( v2f IN ) : COLOR //only color is used because position is taken care of by vertex program.
+{
+    return IN.Color;
+}
+
+
+
+technique t0
+{
+    pass p0
+    {
+        VertexProgram = compile glslv mainVP( ModelViewProjection );
+        FragmentProgram = compile glslf mainFP();
+    }
+}
+
