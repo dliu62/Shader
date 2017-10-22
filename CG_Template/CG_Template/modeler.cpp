@@ -137,27 +137,28 @@ j_getStrokeVertices(autoVR::Operation *data, std::vector<float> &verticeData, bo
 int
 j_getStrokeIndices(autoVR::Operation *data, std::vector<GLuint> &indiceData, int firstId)
 {
-	int pointSize = data->points_size();
-	int vper = 2;
+	//the stroke points are organized like this ":::::::::", 2 * len = points
+	int hlineSize = 2;
+	int vlineSize = data->points_size() / 2;
 
-	firstId += vper;
+	firstId += hlineSize;
 
-	int vertexSize = pointSize * (vper - 1) * 6; //
+	int vertexSize = vlineSize * (hlineSize - 1) * 6; //
 	if (indiceData.size() < vertexSize)
 		indiceData.resize(vertexSize);
 
-	int count = 0;  //vper * (to-from)
-	for (int i = 1; i < pointSize; i++) {
-		for (int j = 0; j < vper - 1; j++) {
-			indiceData[count++] = firstId + j - vper;
-			indiceData[count++] = firstId + j + 1 - vper;
+	int count = 0;
+	for (int i = 1; i < vlineSize; i++) {
+		for (int j = 0; j < hlineSize - 1; j++) {
+			indiceData[count++] = firstId + j - hlineSize;
+			indiceData[count++] = firstId + j + 1 - hlineSize;
 			indiceData[count++] = firstId + j;
 
-			indiceData[count++] = firstId + j + 1 - vper;
+			indiceData[count++] = firstId + j + 1 - hlineSize;
 			indiceData[count++] = firstId + j + 1;
 			indiceData[count++] = firstId + j;
 		}
-		firstId += vper;
+		firstId += hlineSize;
 	}
 	return count;
 }
