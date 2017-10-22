@@ -1,0 +1,45 @@
+package autoVR;
+
+//<<<<<<<stroke>>>>>>>//
+message Color {
+  optional float          red = 1 [default = 0];
+  optional float          green = 2 [default = 0];
+  optional float          blue = 3 [default = 0];
+  optional float          alpha = 4 [default = 1];
+  optional float          lightness = 5 [default = 0];
+}
+
+message Operation {
+//unchanged, not repeated, uniquely identify the operation
+  optional int64          unique_id = 8;
+//op position in frame, changeable due to add/remove of operation
+  optional int32          id = 9;
+  optional int32          flags = 10;
+  optional int32          type = 11;
+  optional float          stroke_width = 12;
+  optional int32          curvature = 13;
+  optional float          texture_flag = 14;
+  optional Color          color = 7;
+
+  message Point {
+    optional float        x = 1;
+    optional float        y = 2;
+    optional float        z = 3;
+  }
+  message Texture {
+     optional float       u = 1;
+     optional float       v = 2;
+  }
+
+  repeated Point          points = 1;
+  repeated Point          pitches = 2;
+  repeated Point          normals= 3;
+  repeated Texture        textures = 4;
+}
+
+
+//<<<<<<<frame>>>>>>//
+message Painting {
+  optional string          name = 2;
+  repeated Operation       operations = 1;
+}

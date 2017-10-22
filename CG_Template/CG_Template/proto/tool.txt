@@ -1,0 +1,6 @@
+Use the following cmd to compile the proto file, change it accordingly.
+
+F:\repository\3rdParty\protobuf\cmake\build\Release\protoc
+
+protoc -I=F:\repository\cgShader\CG_Template\CG_template\proto --cpp_out=F:\repository\cgShader\CG_Template\CG_template\proto F:\repository\cgShader\CG_Template\CG_template\proto\autoVR.proto
+

@@ -1,0 +1,10 @@
+Debug/*
+Release/*
+x64/*
+*.vs
+*.DS_Store
+*/.DS_Store
+Win32/*
+*VC.opendb
+*.VC.db
+ipch/*
