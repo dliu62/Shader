@@ -175,10 +175,18 @@ BufferRender::BufferRender(const std::string &filename)
 	autoVR::Painting painting;
 	ReadProtoFromTextFile(filename, &painting);
 
-	std::vector<float> vertexes;
-	std::vector<float> indices;
+	std::vector<float> vertexes, vertexes1;
+	std::vector<GLuint> indices, indices1;
+
+	int offsetId = 1;
+	bool attributes[5] = { true, true, true, true };  //pos + norm + tangents + texture
 	for (int i = 0; i < painting.operations_size(); i++) {
-		
+		vertexes1.clear(); indices1.clear();
+		j_getStrokeVertices(painting.mutable_operations(i), vertexes1, attributes);  //get the vertex data of stroke i
+		j_getStrokeIndices(painting.mutable_operations(i), indices1, offsetId); //get the indice data of stroke i
+		vertexes.insert(vertexes.end(), vertexes1.begin(), vertexes1.end());
+		indices.insert(indices.end(), indices1.begin(), indices1.end());
+		offsetId += painting.mutable_operations(i)->points_size();
 	}
 
 	m_VAO = m_vertexBuffer = m_indiceBuffer = 0;
@@ -191,10 +199,10 @@ BufferRender::BufferRender(const std::string &filename)
 	assert(m_VAO);
 	assert(m_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*MAX_STROKE_VERTICE_BUFFER_SIZE, 0, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*vertexes.size(), &vertexes[0], GL_DYNAMIC_DRAW);
 	if (m_indiceBuffer) {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indiceBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*MAX_STROKE_VERTICE_BUFFER_SIZE, 0, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*indices.size(), &indices[0], GL_DYNAMIC_DRAW);
 	}
 }
 
